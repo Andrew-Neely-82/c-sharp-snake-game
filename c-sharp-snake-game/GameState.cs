@@ -13,7 +13,7 @@ namespace c_sharp_snake_game
         public GridValue[,] Grid { get; }
         public Direction Dir { get; private set; }
         public int Score { get; private set; }
-        public bool GameOVer { get; private set; }
+        public bool GameOver { get; private set; }
 
         private readonly LinkedList<Position> snakePositions = new LinkedList<Position>();
         private readonly Random random = new Random();
@@ -127,6 +127,15 @@ namespace c_sharp_snake_game
             if (hit == GridValue.Outside || hit == GridValue.Snake)
             {
                 GameOver = true;
+            } else if (hit == GridValue.Empty)
+            {
+                RemoveTail();
+                AddHead(newHeadPos);
+            } else if (hit == GridValue.Food)
+            {
+                AddHead(newHeadPos);
+                Score++;
+                AddFood();
             }
         }
     }
