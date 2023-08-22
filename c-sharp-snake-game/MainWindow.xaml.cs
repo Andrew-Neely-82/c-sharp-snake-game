@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace c_sharp_snake_game
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly Dictionary<GridValue, ImageSource> gridValToImage = new()
@@ -31,8 +21,8 @@ namespace c_sharp_snake_game
         {
             { Direction.Up, 0 },
             { Direction.Right, 90 },
-            {Direction.Down, 180 },
-            {Direction.Left, 270 }
+            { Direction.Down, 180 },
+            { Direction.Left, 270 }
         };
 
         private readonly int rows = 25, cols = 25;
@@ -81,6 +71,7 @@ namespace c_sharp_snake_game
 
             switch (e.Key)
             {
+                // For Normal Players
                 case Key.A:
                     gameState.ChangeDirections(Direction.Left);
                     break;
@@ -93,6 +84,19 @@ namespace c_sharp_snake_game
                 case Key.S:
                     gameState.ChangeDirections(Direction.Down);
                     break;
+                    // For Arrow Players
+                case Key.Up: 
+                    gameState.ChangeDirections(Direction.Up);
+                     break;
+                case Key.Down:
+                    gameState.ChangeDirections(Direction.Down);
+                    break;
+                case Key.Left:
+                    gameState.ChangeDirections(Direction.Left);
+                    break;
+                case Key.Right:
+                    gameState.ChangeDirections(Direction.Right);
+                    break;
             }
         }
 
@@ -100,8 +104,9 @@ namespace c_sharp_snake_game
         {
             while (!gameState.GameOver)
             {
-                await Task.Delay(150);
+                await Task.Delay(150); // game speed
                 gameState.Move();
+                DrawSnakeHead();
                 Draw();
             }
         }
